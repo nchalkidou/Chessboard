@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Chessboard</string>
+
+    <!-- Chessboard header labels -->
+    <string name="squareLabelA">A</string>
+    <string name="squareLabelB">B</string>
+    <string name="squareLabelC">C</string>
+    <string name="squareLabelD">D</string>
+    <string name="squareLabelE">E</string>
+    <string name="squareLabelF">F</string>
+    <string name="squareLabelG">G</string>
+    <string name="squareLabelH">H</string>
+    <string name="squareLabel1">1</string>
+    <string name="squareLabel2">2</string>
+    <string name="squareLabel3">3</string>
+    <string name="squareLabel4">4</string>
+    <string name="squareLabel5">5</string>
+    <string name="squareLabel6">6</string>
+    <string name="squareLabel7">7</string>
+    <string name="squareLabel8">8</string>
+</resources>
