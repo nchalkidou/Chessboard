@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Chessboard</string>
 
-    <!-- Chessboard header labels -->
+    <!-- Chessboard header ranks and files labels -->
     <string name="squareLabelA">A</string>
     <string name="squareLabelB">B</string>
     <string name="squareLabelC">C</string>
@@ -18,4 +18,10 @@
     <string name="squareLabel6">6</string>
     <string name="squareLabel7">7</string>
     <string name="squareLabel8">8</string>
+
+    <string name="startPointLabel" translatable="true">Start position:</string>
+    <string name="targetPointLabel" translatable="true">Target position:</string>
+    <string name="pathsLabel" translatable="true">Possible paths:</string>
+    <string name="refreshButton" translatable="true">Refresh positions</string>
+    <string name="noPathsAvailable" translatable="true">No paths available</string>
 </resources>

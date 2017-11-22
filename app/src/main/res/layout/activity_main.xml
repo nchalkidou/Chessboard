@@ -1,38 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include
-        android:id="@+id/headerCharacters"
-        layout="@layout/chessboard_header_characters"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/squareLabelSize"
-        app:layout_constraintLeft_toLeftOf="@id/chessboard"
-        app:layout_constraintRight_toRightOf="@id/chessboard"
-        app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintEnd_toEndOf="@id/chessboard"/>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <include layout="@layout/chessboard_header_numbers"
-        android:id="@+id/headerNumbers"
-        android:layout_width="@dimen/squareLabelSize"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/chessboard"
-        app:layout_constraintRight_toLeftOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard"
-        app:layout_constraintBottom_toBottomOf="@id/chessboard"/>
+        <include
+            android:id="@+id/headerFiles"
+            layout="@layout/chessboard_header_files"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/squareLabelSize"
+            app:layout_constraintLeft_toLeftOf="@id/chessboard"
+            app:layout_constraintRight_toRightOf="@id/chessboard"
+            app:layout_constraintStart_toStartOf="@id/chessboard"
+            app:layout_constraintEnd_toEndOf="@id/chessboard"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/chessboard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        app:layout_constraintTop_toBottomOf="@id/headerCharacters"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
-</android.support.constraint.ConstraintLayout>
+        <include
+            layout="@layout/chessboard_header_ranks"
+            android:layout_width="@dimen/squareLabelSize"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/chessboard"
+            app:layout_constraintRight_toLeftOf="@id/chessboard"
+            app:layout_constraintTop_toTopOf="@id/chessboard"
+            app:layout_constraintBottom_toBottomOf="@id/chessboard"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/chessboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            app:layout_constraintTop_toBottomOf="@id/headerFiles"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/buttonRefresh"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:onClick="reset"
+            android:layout_margin="8dp"
+            android:background="@color/colorAccent"
+            android:contentDescription="@string/refreshButton"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chessboard"
+            app:srcCompat="@drawable/ic_refresh" />
+
+        <TextView
+            android:id="@+id/startPointLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlackSquare"
+            app:layout_constraintTop_toBottomOf="@id/chessboard"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="@string/startPointLabel" />
+
+        <TextView
+            android:id="@+id/startPointValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@+id/startPointLabel"
+            app:layout_constraintBaseline_toBaselineOf="@id/startPointLabel"
+            tools:text="b4" />
+
+        <TextView
+            android:id="@+id/targetPointLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlackSquare"
+            app:layout_constraintTop_toBottomOf="@id/startPointLabel"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="@string/targetPointLabel"/>
+
+        <TextView
+            android:id="@+id/targetPointValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@+id/targetPointLabel"
+            app:layout_constraintBaseline_toBaselineOf="@id/targetPointLabel"
+            tools:text="g7" />
+
+        <TextView
+            android:id="@+id/pathsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlackSquare"
+            app:layout_constraintTop_toBottomOf="@+id/targetPointLabel"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="@string/pathsLabel"/>
+
+        <TextView
+            android:id="@+id/pathsValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/pathsLabel"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:text="no paths available" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

@@ -23,7 +23,7 @@ public class ChessSquaresAdapter extends RecyclerView.Adapter<ChessSquaresAdapte
      * Interface to receive clicks
      */
     public interface ChessSquaresAdapterOnClickHandler {
-        void onClick(Square square);
+        void onClick(int position);
     }
 
     public ChessSquaresAdapter(@NonNull Context context, ChessSquaresAdapterOnClickHandler clickHandler) {
@@ -50,11 +50,25 @@ public class ChessSquaresAdapter extends RecyclerView.Adapter<ChessSquaresAdapte
     @Override
     public void onBindViewHolder(SquareViewHolder holder, int position) {
         Square square = squares.get(position);
+        // set start or target
+        if (square.isStartPoint()) {
+            holder.mBinding.squareLabel.setText("S");
+        } else if(square.isEndPoint()) {
+            holder.mBinding.squareLabel.setText("T");
+        } else {
+            holder.mBinding.squareLabel.setText("");
+        }
+
+        // set color of square and label
         if(square.isBlack()) {
             holder.mBinding.square.setBackgroundResource(R.color.colorBlackSquare);
+            holder.mBinding.squareLabel.setTextColor(mContext.getResources().getColor(R.color.colorWhiteSquare));
         }else {
             holder.mBinding.square.setBackgroundResource(R.color.colorWhiteSquare);
+            holder.mBinding.squareLabel.setTextColor(mContext.getResources().getColor(R.color.colorBlackSquare));
         }
+
+        //Log.e("test", "created " + square.getIdentifierName());
     }
 
     @Override
@@ -82,8 +96,7 @@ public class ChessSquaresAdapter extends RecyclerView.Adapter<ChessSquaresAdapte
 
         @Override
         public void onClick(View view) {
-            Square clickedSquare = squares.get(getAdapterPosition());
-            mClickHandler.onClick(clickedSquare);
+            mClickHandler.onClick(getAdapterPosition());
         }
     }
 }

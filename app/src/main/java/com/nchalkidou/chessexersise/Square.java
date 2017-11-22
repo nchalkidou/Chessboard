@@ -1,30 +1,32 @@
 package com.nchalkidou.chessexersise;
 
-import static com.nchalkidou.chessexersise.utils.Utils.VERTICAL_FILES_LABELS;
+import static com.nchalkidou.chessexersise.Chessboard.VERTICAL_FILES_LABELS;
 
 /**
  * Squares of the chess board
  */
 public class Square {
 
-    private int coordX;
-    private int coordY;
+    private int x;
+    private int y;
     private boolean isBlack;
+    private boolean isStartPoint;
+    private boolean isEndPoint;
 
-    public int getCoordX() {
-        return coordX;
+    public int getX() {
+        return x;
     }
 
-    public void setCoordX(int coordX) {
-        this.coordX = coordX;
+    public void setX(int x) {
+        this.x = x;
     }
 
-    public int getCoordY() {
-        return coordY;
+    public int getY() {
+        return y;
     }
 
-    public void setCoordY(int coordY) {
-        this.coordY = coordY;
+    public void setY(int y) {
+        this.y = y;
     }
 
     public boolean isBlack() {
@@ -39,16 +41,41 @@ public class Square {
         isBlack = false;
     }
 
+    public boolean isStartPoint() {
+        return isStartPoint;
+    }
+
+    public void setStartPoint() {
+        isStartPoint = true;
+    }
+
+    public boolean isEndPoint() {
+        return isEndPoint;
+    }
+
+    public void setEndPoint() {
+        isEndPoint = true;
+    }
+
+    public void resetPoints() {
+        isStartPoint = false;
+        isEndPoint = false;
+    }
+
     public String getVerticalFile() {
-        return VERTICAL_FILES_LABELS[coordX];
+        return VERTICAL_FILES_LABELS[x];
     }
 
     public String getHorizontalRank() {
-        return String.valueOf(8-getCoordY());
+        return String.valueOf(8-getY());
+    }
+
+    public String getIdentifierName() {
+        return getVerticalFile() + getHorizontalRank();
     }
 
     @Override
     public String toString() {
-        return getVerticalFile() + getHorizontalRank() + ", X: " + coordX + ", Y: " + coordY + ", " + (isBlack ? "black" : "white");
+        return getIdentifierName() + ", X: " + x + ", Y: " + y + ", " + (isBlack ? "black" : "white");
     }
 }

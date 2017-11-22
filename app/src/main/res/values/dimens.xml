@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="squareSize">64dp</dimen>
-    <dimen name="squareLabelSize">32dp</dimen>
+    <dimen name="squareSize">40dp</dimen>
+    <dimen name="squareLabelSize">20dp</dimen>
 
 </resources>

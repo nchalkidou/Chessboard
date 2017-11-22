@@ -11,8 +11,8 @@
             android:id="@+id/squareLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_gravity="top|center_horizontal"
+            android:textSize="16sp"
             tools:text="a"/>
     </FrameLayout>
 </layout>
