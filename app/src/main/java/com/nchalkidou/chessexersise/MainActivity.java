@@ -12,7 +12,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SquaresAdapter.SquaresAdapterOnClickHandler {
 
-    private RecyclerView mChessboardView;
+    public RecyclerView mChessboardView;
     private SquaresAdapter mSquaresAdapter;
     private ChessboardViewModel mChessboardViewModel;
 

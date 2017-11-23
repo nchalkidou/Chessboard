@@ -9,6 +9,7 @@ import java.util.List;
 
 public class ChessboardViewModel extends ViewModel {
 
+    private static final int KNIGHT_MOVES = 3;
     private List<Square> mSquares;
     private Square mStartSquare;
     private Square mTargetSquare;
@@ -58,10 +59,9 @@ public class ChessboardViewModel extends ViewModel {
         List<List<String>> algebraicPaths = new ArrayList<>();
 
         if (mStartSquare != null && mTargetSquare != null) {
-            List<List<Point>> paths = mKnight.getPathToTarget(mTargetSquare.getX(), mTargetSquare.getY(), 3);
+            List<List<Point>> paths = mKnight.getPathToTarget(mTargetSquare.getX(), mTargetSquare.getY(), KNIGHT_MOVES);
             for (List<Point> path : paths) {
                 List<String> algebraicPath = new ArrayList<>();
-                algebraicPath.add(mStartSquare.getIdentifierName());
                 for (Point position : path) {
                     int index = position.getY() * 8 + position.getX();
                     algebraicPath.add(mSquares.get(index).getIdentifierName());

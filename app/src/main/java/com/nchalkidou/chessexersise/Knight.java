@@ -1,11 +1,11 @@
 package com.nchalkidou.chessexersise;
 
-import android.util.Log;
-
 import com.nchalkidou.chessexersise.util.Point;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * The class of the Knight
@@ -24,8 +24,8 @@ public class Knight {
 
     /**
      * Find possible paths of knight for specific moves number to target point
-     * @param targetX
-     * @param targetY
+     * @param targetX of target point
+     * @param targetY of target point
      * @param movesNumber in how many moves
      * @return the list of possible paths
      */
@@ -34,32 +34,34 @@ public class Knight {
         this.targetY = targetY;
 
         List<List<Point>> paths = new ArrayList<>();
+        Queue<List<Point>> queuePaths = new LinkedList<>();
 
+        // add the first position /start
+        List<Point> path = new ArrayList<>();
+        path.add(new Point(x, y));
+        queuePaths.add(path);
 
-        //Todo: make it recursive
+        while(!queuePaths.isEmpty()) {
+            List<Point> queuePath = queuePaths.remove();
+            // if all steps done check if target achieved
+            if (queuePath.size() == movesNumber+1) {
+                Point checkPoint = queuePath.get(queuePath.size()-1);
+                if (isMoveTargetPoint(checkPoint.getX(), checkPoint.getY())) {
+                    paths.add(queuePath);
+                }
+            } else {
+                Point lastPoint = queuePath.get(queuePath.size()-1);
+                List<Point> possibleMoves = getPossibleMoves(lastPoint);
 
-        List<Point> firstMoves = getPossibleMoves(new Point(x, y));
-        for (Point firstMove : firstMoves) {
-
-            List<Point> secondMoves = getPossibleMoves(new Point(firstMove.getX(), firstMove.getY()));
-            for (Point secondMove : secondMoves) {
-
-                List<Point> thirdMoves = getPossibleMoves(new Point(secondMove.getX(), secondMove.getY()));
-                for (Point thirdMove : thirdMoves) {
-                    if (isMoveEndPoint(thirdMove.getX(), thirdMove.getY())){
-                        List<Point> path = new ArrayList<>();
-                        path.add(firstMove);
-                        path.add(secondMove);
-                        path.add(thirdMove);
-
-                        paths.add(path);
-                    }
+                for (Point possibleMove : possibleMoves) {
+                    List<Point> newPath = new ArrayList<>();
+                    newPath.addAll(queuePath);
+                    newPath.add(possibleMove);
+                    queuePaths.add(newPath);
                 }
             }
         }
-
         return paths;
-
     }
 
     /**
@@ -124,7 +126,7 @@ public class Knight {
      * @param y coordinate of point to check
      * @return true if equal to target
      */
-    private boolean isMoveEndPoint(int x, int y) {
+    private boolean isMoveTargetPoint(int x, int y) {
         return (x == targetX && y == targetY);
     }
 }
