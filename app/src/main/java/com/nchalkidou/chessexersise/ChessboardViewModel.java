@@ -77,7 +77,7 @@ public class ChessboardViewModel extends ViewModel {
      * Create 64(8x8) squares and set white and black squares
      * @return return the list of the created squares
      */
-    private List<Square> createSquares() {
+    public List<Square> createSquares() {
         List<Square> squares = new ArrayList<>();
 
         for (int y=0; y<8; y++) {

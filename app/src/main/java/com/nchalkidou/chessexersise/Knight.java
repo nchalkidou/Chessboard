@@ -53,7 +53,6 @@ public class Knight {
                         path.add(thirdMove);
 
                         paths.add(path);
-                        Log.e("test", "added");
                     }
                 }
             }
