@@ -1,18 +1,22 @@
 package com.nchalkidou.chessexersise;
 
+import android.arch.lifecycle.ViewModel;
+
+import com.nchalkidou.chessexersise.util.Point;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Chessboard {
+public class ChessboardViewModel extends ViewModel {
 
     private List<Square> mSquares;
     private Square mStartSquare;
-    private Square mEndSquare;
+    private Square mTargetSquare;
     private Knight mKnight;
 
     public static final String[] VERTICAL_FILES_LABELS = {"a", "b", "c", "d", "e", "f", "g", "h"};
 
-    public Chessboard() {
+    public ChessboardViewModel() {
         mSquares = createSquares();
     }
 
@@ -20,8 +24,8 @@ public class Chessboard {
         return mSquares;
     }
 
-    public boolean hasStartSquare() {
-        return (mStartSquare != null);
+    public Square getStartSquare() {
+        return mStartSquare;
     }
 
     public void setStartSquare(int position) {
@@ -32,34 +36,34 @@ public class Chessboard {
         mKnight = new Knight(square.getX(), square.getY());
     }
 
-    public boolean hasEndSquare() {
-        return (mEndSquare != null);
+    public Square getTargetSquare() {
+        return mTargetSquare;
     }
 
-    public void setEndSquare(int position) {
+    public void setTargetSquare(int position) {
         Square square = mSquares.get(position);
-        square.setEndPoint();
-        mEndSquare = square;
+        square.setTargetPoint();
+        mTargetSquare = square;
     }
 
     public void resetChessboard() {
         mSquares = createSquares();
         // reset start and end point
         mStartSquare = null;
-        mEndSquare = null;
+        mTargetSquare = null;
         mKnight = null;
     }
 
     public List<List<String>> getKnightPossiblePaths() {
         List<List<String>> algebraicPaths = new ArrayList<>();
 
-        if (mStartSquare != null && mEndSquare != null) {
-            List<List<int[]>> paths = mKnight.getPathToTarget(mEndSquare.getX(), mEndSquare.getY(), 3);
-            for (List<int[]> path : paths) {
+        if (mStartSquare != null && mTargetSquare != null) {
+            List<List<Point>> paths = mKnight.getPathToTarget(mTargetSquare.getX(), mTargetSquare.getY(), 3);
+            for (List<Point> path : paths) {
                 List<String> algebraicPath = new ArrayList<>();
                 algebraicPath.add(mStartSquare.getIdentifierName());
-                for (int[] position : path) {
-                    int index = position[1] * 8 + position[0];
+                for (Point position : path) {
+                    int index = position.getY() * 8 + position.getX();
                     algebraicPath.add(mSquares.get(index).getIdentifierName());
                 }
                 algebraicPaths.add(algebraicPath);

@@ -1,5 +1,6 @@
 package com.nchalkidou.chessexersise;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,11 +10,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ChessSquaresAdapter.ChessSquaresAdapterOnClickHandler {
+public class MainActivity extends AppCompatActivity implements SquaresAdapter.SquaresAdapterOnClickHandler {
 
     private RecyclerView mChessboardView;
-    private ChessSquaresAdapter mSquaresAdapter;
-    private Chessboard mChessboard;
+    private SquaresAdapter mSquaresAdapter;
+    private ChessboardViewModel mChessboardViewModel;
 
     private TextView startPointValue, targetPointValue, pathsValue;
 
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements ChessSquaresAdapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // create of get the instance of the view model
+        mChessboardViewModel = ViewModelProviders.of(this).get(ChessboardViewModel.class);
 
         startPointValue = (TextView) findViewById(R.id.startPointValue);
         targetPointValue = (TextView) findViewById(R.id.targetPointValue);
@@ -28,25 +31,40 @@ public class MainActivity extends AppCompatActivity implements ChessSquaresAdapt
 
         // Init / create the mChessboard
         createChessboard();
+        displayStartPosition();
+        displayTargetPosition();
+        showKnightPossiblePaths();
     }
 
     @Override
     public void onClick(int position) {
-        Square square = mChessboard.getSquares().get(position);
+        Square square = mChessboardViewModel.getSquares().get(position);
 
-        if (!mChessboard.hasStartSquare()) {
-            mChessboard.setStartSquare(position);
-            mSquaresAdapter.updateChessboard(mChessboard.getSquares());
+        if (mChessboardViewModel.getStartSquare() == null) {
+            mChessboardViewModel.setStartSquare(position);
+            mSquaresAdapter.updateChessboard(mChessboardViewModel.getSquares());
 
-            startPointValue.setText(square.getIdentifierName());
-        } else if (!mChessboard.hasEndSquare()) {
-            mChessboard.setEndSquare(position);
-            mSquaresAdapter.updateChessboard(mChessboard.getSquares());
+            displayStartPosition();
+        } else if (mChessboardViewModel.getTargetSquare() == null) {
+            mChessboardViewModel.setTargetSquare(position);
+            mSquaresAdapter.updateChessboard(mChessboardViewModel.getSquares());
 
-            targetPointValue.setText(square.getIdentifierName());
+            displayTargetPosition();
 
             // trigger on target square selected
             showKnightPossiblePaths();
+        }
+    }
+
+    private void displayStartPosition() {
+        if (mChessboardViewModel.getStartSquare() != null) {
+            startPointValue.setText(mChessboardViewModel.getStartSquare().getIdentifierName());
+        }
+    }
+
+    private void displayTargetPosition() {
+        if (mChessboardViewModel.getTargetSquare() != null) {
+            targetPointValue.setText(mChessboardViewModel.getTargetSquare().getIdentifierName());
         }
     }
 
@@ -54,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements ChessSquaresAdapt
      * Show the possible paths
      */
     private void showKnightPossiblePaths() {
-        List<List<String>> paths = mChessboard.getKnightPossiblePaths();
+        List<List<String>> paths = mChessboardViewModel.getKnightPossiblePaths();
 
         if (paths != null && !paths.isEmpty()){
             int countPath = 1;
@@ -87,8 +105,8 @@ public class MainActivity extends AppCompatActivity implements ChessSquaresAdapt
         pathsValue.setText("");
 
         // reset chessboard squares
-        mChessboard.resetChessboard();
-        mSquaresAdapter.updateChessboard(mChessboard.getSquares());
+        mChessboardViewModel.resetChessboard();
+        mSquaresAdapter.updateChessboard(mChessboardViewModel.getSquares());
     }
 
     /**
@@ -100,12 +118,9 @@ public class MainActivity extends AppCompatActivity implements ChessSquaresAdapt
         mChessboardView.setLayoutManager(new GridLayoutManager(this, 8));
         mChessboardView.setHasFixedSize(true);
 
-        // chessboard
-        mChessboard = new Chessboard();
-
         // create the adapter and populate with squares
-        mSquaresAdapter = new ChessSquaresAdapter(this, this);
-        mSquaresAdapter.updateChessboard(mChessboard.getSquares());
+        mSquaresAdapter = new SquaresAdapter(this, this);
+        mSquaresAdapter.updateChessboard(mChessboardViewModel.getSquares());
 
         mChessboardView.setAdapter(mSquaresAdapter);
     }

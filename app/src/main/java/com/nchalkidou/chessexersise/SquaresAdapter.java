@@ -12,21 +12,21 @@ import com.nchalkidou.chessexersise.databinding.SquareBinding;
 
 import java.util.List;
 
-public class ChessSquaresAdapter extends RecyclerView.Adapter<ChessSquaresAdapter.SquareViewHolder> {
+public class SquaresAdapter extends RecyclerView.Adapter<SquaresAdapter.SquareViewHolder> {
 
     private final Context mContext;
     private List<Square> squares;
 
-    final private ChessSquaresAdapterOnClickHandler mClickHandler;
+    final private SquaresAdapterOnClickHandler mClickHandler;
 
     /**
      * Interface to receive clicks
      */
-    public interface ChessSquaresAdapterOnClickHandler {
+    public interface SquaresAdapterOnClickHandler {
         void onClick(int position);
     }
 
-    public ChessSquaresAdapter(@NonNull Context context, ChessSquaresAdapterOnClickHandler clickHandler) {
+    public SquaresAdapter(@NonNull Context context, SquaresAdapterOnClickHandler clickHandler) {
         mContext = context;
         mClickHandler = clickHandler;
     }
@@ -53,7 +53,7 @@ public class ChessSquaresAdapter extends RecyclerView.Adapter<ChessSquaresAdapte
         // set start or target
         if (square.isStartPoint()) {
             holder.mBinding.squareLabel.setText("S");
-        } else if(square.isEndPoint()) {
+        } else if(square.isTargetPoint()) {
             holder.mBinding.squareLabel.setText("T");
         } else {
             holder.mBinding.squareLabel.setText("");
@@ -67,8 +67,6 @@ public class ChessSquaresAdapter extends RecyclerView.Adapter<ChessSquaresAdapte
             holder.mBinding.square.setBackgroundResource(R.color.colorWhiteSquare);
             holder.mBinding.squareLabel.setTextColor(mContext.getResources().getColor(R.color.colorBlackSquare));
         }
-
-        //Log.e("test", "created " + square.getIdentifierName());
     }
 
     @Override

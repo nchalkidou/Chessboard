@@ -1,6 +1,6 @@
 package com.nchalkidou.chessexersise;
 
-import static com.nchalkidou.chessexersise.Chessboard.VERTICAL_FILES_LABELS;
+import static com.nchalkidou.chessexersise.ChessboardViewModel.VERTICAL_FILES_LABELS;
 
 /**
  * Squares of the chess board
@@ -11,7 +11,7 @@ public class Square {
     private int y;
     private boolean isBlack;
     private boolean isStartPoint;
-    private boolean isEndPoint;
+    private boolean isTargetPoint;
 
     public int getX() {
         return x;
@@ -49,17 +49,17 @@ public class Square {
         isStartPoint = true;
     }
 
-    public boolean isEndPoint() {
-        return isEndPoint;
+    public boolean isTargetPoint() {
+        return isTargetPoint;
     }
 
-    public void setEndPoint() {
-        isEndPoint = true;
+    public void setTargetPoint() {
+        isTargetPoint = true;
     }
 
     public void resetPoints() {
         isStartPoint = false;
-        isEndPoint = false;
+        isTargetPoint = false;
     }
 
     public String getVerticalFile() {

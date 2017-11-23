@@ -21,7 +21,7 @@
 
     <string name="startPointLabel" translatable="true">Start position:</string>
     <string name="targetPointLabel" translatable="true">Target position:</string>
-    <string name="pathsLabel" translatable="true">Possible paths:</string>
+    <string name="pathsLabel" translatable="true">Possible paths of knight (3 moves in total):</string>
     <string name="refreshButton" translatable="true">Refresh positions</string>
     <string name="noPathsAvailable" translatable="true">No paths available</string>
 </resources>
