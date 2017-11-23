@@ -8,12 +8,22 @@
         android:layout_height="@dimen/squareSize">
 
         <TextView
-            android:id="@+id/squareLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|center_horizontal"
+            android:id="@+id/startSquareLabel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_margin="8dp"
             android:textSize="16sp"
-            tools:text="a"/>
+            tools:text="S"/>
+
+        <TextView
+            android:id="@+id/targetSquareLabel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_margin="8dp"
+            android:textSize="16sp"
+            tools:text="T"/>
     </FrameLayout>
 </layout>
 

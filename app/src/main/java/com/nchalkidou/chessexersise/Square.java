@@ -57,11 +57,6 @@ public class Square {
         isTargetPoint = true;
     }
 
-    public void resetPoints() {
-        isStartPoint = false;
-        isTargetPoint = false;
-    }
-
     public String getVerticalFile() {
         return VERTICAL_FILES_LABELS[x];
     }

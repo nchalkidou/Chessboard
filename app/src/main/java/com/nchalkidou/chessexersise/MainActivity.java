@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SquaresAdapter.SquaresAdapterOnClickHandler {
 
@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity implements SquaresAdapter.Sq
     private ChessboardViewModel mChessboardViewModel;
 
     private TextView startPointValue, targetPointValue, pathsValue;
+
+    private ListView pathsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements SquaresAdapter.Sq
         startPointValue = (TextView) findViewById(R.id.startPointValue);
         targetPointValue = (TextView) findViewById(R.id.targetPointValue);
         pathsValue = (TextView) findViewById(R.id.pathsValue);
+        pathsList = (ListView) findViewById(R.id.pathsList);
 
         // Init / create the mChessboard
         createChessboard();
@@ -38,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements SquaresAdapter.Sq
 
     @Override
     public void onClick(int position) {
-        Square square = mChessboardViewModel.getSquares().get(position);
 
         if (mChessboardViewModel.getStartSquare() == null) {
             mChessboardViewModel.setStartSquare(position);
@@ -69,29 +71,22 @@ public class MainActivity extends AppCompatActivity implements SquaresAdapter.Sq
     }
 
     /**
-     * Show the possible paths
+     * Show the possible paths in list view
      */
     private void showKnightPossiblePaths() {
-        List<List<String>> paths = mChessboardViewModel.getKnightPossiblePaths();
+        String[] paths = mChessboardViewModel.getKnightPossiblePathsArray();
 
-        if (paths != null && !paths.isEmpty()){
-            int countPath = 1;
-
-            for (List<String> path : paths) {
-                String pathString = countPath + ". \t";
-
-                for (int i=0; i<path.size(); i++) {
-                    if (path.size()-1 == i)
-                        pathString += path.get(i);
-                    else
-                        pathString += path.get(i) +" - ";
-                }
-
-                pathsValue.append(pathString + "\n");
-                countPath++;
-            }
+        if (paths != null && paths.length > 0) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                    android.R.layout.simple_list_item_1,
+                    android.R.id.text1,
+                    paths);
+            pathsList.setAdapter(adapter);
+            // todo: maybe add animated paths on click
+            pathsList.setVisibility(View.VISIBLE);
+            pathsValue.setVisibility(View.INVISIBLE);
         } else {
-            pathsValue.setText(this.getResources().getString(R.string.noPathsAvailable));
+            pathsValue.setVisibility(View.VISIBLE);
         }
     }
 
@@ -102,7 +97,8 @@ public class MainActivity extends AppCompatActivity implements SquaresAdapter.Sq
         // reset labels
         startPointValue.setText("");
         targetPointValue.setText("");
-        pathsValue.setText("");
+        pathsValue.setVisibility(View.INVISIBLE);
+        pathsList.setVisibility(View.INVISIBLE);
 
         // reset chessboard squares
         mChessboardViewModel.resetChessboard();

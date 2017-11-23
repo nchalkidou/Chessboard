@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,20 +53,31 @@ public class SquaresAdapter extends RecyclerView.Adapter<SquaresAdapter.SquareVi
         Square square = squares.get(position);
         // set start or target
         if (square.isStartPoint()) {
-            holder.mBinding.squareLabel.setText("S");
-        } else if(square.isTargetPoint()) {
-            holder.mBinding.squareLabel.setText("T");
+            holder.mBinding.startSquareLabel.setText("S");
         } else {
-            holder.mBinding.squareLabel.setText("");
+            holder.mBinding.startSquareLabel.setText("");
+        }
+        if (square.isTargetPoint()) {
+            holder.mBinding.targetSquareLabel.setText("T");
+        } else {
+            holder.mBinding.targetSquareLabel.setText("");
+            holder.mBinding.startSquareLabel.setGravity(Gravity.CENTER);
+            holder.mBinding.targetSquareLabel.setGravity(Gravity.CENTER);
+        }
+        if (square.isStartPoint() && square.isTargetPoint()){
+            holder.mBinding.startSquareLabel.setGravity(Gravity.LEFT);
+            holder.mBinding.targetSquareLabel.setGravity(Gravity.RIGHT);
         }
 
         // set color of square and label
         if(square.isBlack()) {
             holder.mBinding.square.setBackgroundResource(R.color.colorBlackSquare);
-            holder.mBinding.squareLabel.setTextColor(mContext.getResources().getColor(R.color.colorWhiteSquare));
+            holder.mBinding.startSquareLabel.setTextColor(mContext.getResources().getColor(R.color.colorWhiteSquare));
+            holder.mBinding.targetSquareLabel.setTextColor(mContext.getResources().getColor(R.color.colorWhiteSquare));
         }else {
             holder.mBinding.square.setBackgroundResource(R.color.colorWhiteSquare);
-            holder.mBinding.squareLabel.setTextColor(mContext.getResources().getColor(R.color.colorBlackSquare));
+            holder.mBinding.startSquareLabel.setTextColor(mContext.getResources().getColor(R.color.colorBlackSquare));
+            holder.mBinding.targetSquareLabel.setTextColor(mContext.getResources().getColor(R.color.colorBlackSquare));
         }
     }
 

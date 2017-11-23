@@ -14,6 +14,7 @@ public class ChessboardViewModel extends ViewModel {
     private Square mStartSquare;
     private Square mTargetSquare;
     private Knight mKnight;
+    private List<List<Point>> mPossiblePaths;
 
     public static final String[] VERTICAL_FILES_LABELS = {"a", "b", "c", "d", "e", "f", "g", "h"};
 
@@ -45,6 +46,8 @@ public class ChessboardViewModel extends ViewModel {
         Square square = mSquares.get(position);
         square.setTargetPoint();
         mTargetSquare = square;
+
+        mPossiblePaths = mKnight.getPathToTarget(mTargetSquare.getX(), mTargetSquare.getY(), KNIGHT_MOVES);
     }
 
     public void resetChessboard() {
@@ -53,24 +56,28 @@ public class ChessboardViewModel extends ViewModel {
         mStartSquare = null;
         mTargetSquare = null;
         mKnight = null;
+        mPossiblePaths = null;
     }
 
-    public List<List<String>> getKnightPossiblePaths() {
-        List<List<String>> algebraicPaths = new ArrayList<>();
+    public String[] getKnightPossiblePathsArray() {
+        if (mPossiblePaths == null) return null;
 
-        if (mStartSquare != null && mTargetSquare != null) {
-            List<List<Point>> paths = mKnight.getPathToTarget(mTargetSquare.getX(), mTargetSquare.getY(), KNIGHT_MOVES);
-            for (List<Point> path : paths) {
-                List<String> algebraicPath = new ArrayList<>();
-                for (Point position : path) {
-                    int index = position.getY() * 8 + position.getX();
-                    algebraicPath.add(mSquares.get(index).getIdentifierName());
-                }
-                algebraicPaths.add(algebraicPath);
+        String[] paths = new String[mPossiblePaths.size()];
+        for (int i = 0; i < mPossiblePaths.size(); i++) {
+            List<Point> possiblePath = mPossiblePaths.get(i);
+            String path = "";
+
+            for (int j = 0; j < possiblePath.size(); j++) {
+                Point position = possiblePath.get(j);
+                int index = position.getY() * 8 + position.getX();
+                path = path + mSquares.get(index).getIdentifierName();
+
+                if (possiblePath.size() - 1 > j)
+                    path = path + " - ";
             }
+            paths[i] = path;
         }
-
-        return algebraicPaths;
+        return paths;
     }
 
     /**
